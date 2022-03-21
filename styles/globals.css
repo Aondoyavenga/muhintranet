@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .navBtn {
+        @apply hidden h-6 md:inline-flex
+        cursor-pointer hover:scale-125
+        transition-all duration-150 ease-out
+    }
+    .Btn {
+        @apply
+        cursor-pointer hover:scale-125
+        transition-all duration-150 ease-out
+    }
+    .btn {
+        @apply h-7 hover:scale-125 cursor-pointer
+        transition-all duration-150
+    }
+    body {
+        @apply scrollbar-thin scrollbar-none
+    }
+    .link {
+        @apply cursor-pointer hover:underline
+    }
+    .button {
+        @apply p-2 text-xs md:text-sm bg-gradient-to-b from-cleotrades_color-yellow to-yellow-400 border border-cleotrades_color-yellow rounded-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 active:from-yellow-500
+    }
+}
+
+
+
