@@ -20,6 +20,15 @@ export const userLogIn = async (req, res) => {
     }
 }
 
+export const authenticatedUSer = (req, res) => {
+    try {
+        const { user } = req
+        res.send(user)
+    } catch (error) {
+        res.status(404).send({message: `Internal Server Error`})
+    }
+}
+
 export const createUser = async (req, res) => {
     try {
         const { 

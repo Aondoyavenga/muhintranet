@@ -1,6 +1,16 @@
 import axios from "axios"
 import { setError, setIsLoading, setSuccess } from '../app/slices/uiSlice'
-import { setToken } from "../app/slices/userSlice"
+import { setPayLoad, setToken } from "../app/slices/userSlice"
+
+
+export const authenticatedUser = async (token, dispatch) => {
+    try {
+        const { data, status } = await axios.get(`/api/user/authenticated/${token}`)
+        if(status == 200) return dispatch(setPayLoad(data))
+    } catch (error) {
+        dispatch(setError(error?.response?.data?.message))
+    }
+}
 
 export const handleRegistration = async (body, dispatch, setData) => {
     dispatch(setIsLoading(true))
@@ -43,11 +53,12 @@ export const handleRegistration = async (body, dispatch, setData) => {
     
 }
 
-export const handleUserLogIn = async ( body, dispatch, setData ) =>{
+export const handleUserLogIn = async ( body, dispatch, setData, AsyncStorage ) =>{
     try {
         dispatch(setIsLoading(true))
         const { data, status } = await axios.post(`/api/user/login`, body)
        if(status == 200) return (
+           AsyncStorage.setItem('token', data),
            dispatch(setToken(data)),
            setData({
                 email: '',

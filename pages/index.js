@@ -10,6 +10,7 @@ import { selectError, selectIsLoading, setError } from '../app/slices/uiSlice'
 import { handleUserLogIn } from '../appHook/userHooks'
 import { selectToken } from '../app/slices/userSlice'
 import AppSpinner from '../global/AppSpinner'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const users = [
     {
@@ -36,10 +37,12 @@ export default function Home() {
         email: '',
         password: ''
     })
+
+    
     const handleLogIn = () => {
         setTimeout(() =>dispatch(setError('')), 5000)
 
-        handleUserLogIn(data, dispatch, setData)
+        handleUserLogIn(data, dispatch, setData, AsyncStorage )
         
     }
 
