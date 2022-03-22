@@ -7,7 +7,6 @@ import Header from '../components/Header'
 import avatar from '../imgs/peace20.png'
 import puaa from '../imgs/puaa.jpg'
 
-
 const RenderAvatar = ({avatar, margin}) =>{
     return (
         <div 
@@ -68,8 +67,10 @@ const RenderFolder = ({title}) =>{
     )
 }
 const dashboard = () => {
+    
   return (
     <Fragment>
+       
        <main
             className='flex flex-row'
        >

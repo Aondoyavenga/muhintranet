@@ -43,11 +43,13 @@ export const createUser = async (req, res) => {
             address, zipeCode, telehone, education,
             last_name, department, first_name, maritalStatus, password:hasPwd
         })
-       
+       const error = newUser.validateSync()
+       if (error && error.message) return res.status(404).send({message: error.message.split(':')[2].split(',')[0]});
         await newUser.save()
 
         res.send({message: `${newUser?.first_name} Created`})
     } catch (error) {
+        console.log(error)
         res.status(404).send({message: `${error}`})
     }
 }

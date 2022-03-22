@@ -19,7 +19,7 @@ export default async function handler(
             res.status(200).json(data)
         }).catch(err =>{
             const eRes = err?.response?.data?.message?.includes('ValidationError')
-            if(eRes) return  res.status(404).json({message: `${err?.response?.data?.message?.split('ValidationError: ')[1]}`})
+            if(eRes) return  res.status(404).json({message: `${err?.response?.data?.message?.split('ValidationError: ')[1]?.split(',')}`})
             res.status(404).json({message: `${err?.response?.data?.message}`})
         })
         

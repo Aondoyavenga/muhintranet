@@ -11,7 +11,7 @@ const Card = ({name, title, note}) =>{
             <div className="md:col-span-3 sm:col-span-6 xs:col-span-12">
                 <div 
                     className="w-full flex items-center
-                    shadow-md bg-white rounded-lg flex-col justify-between py-5 px-2 min-h-[420px]
+                    shadow-md bg-white rounded-lg flex-col justify-between py-5 px-2 min-h-[44  0px]
                     "
                 >
                     <h1

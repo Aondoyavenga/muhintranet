@@ -4,7 +4,12 @@ import Feauture from '../components/Feauture'
 
 import Header from '../components/Header'
 import Router from 'next/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectError, selectIsLoading, setError } from '../app/slices/uiSlice'
+import { handleUserLogIn } from '../appHook/userHooks'
+import { selectToken } from '../app/slices/userSlice'
+import AppSpinner from '../global/AppSpinner'
 
 const users = [
     {
@@ -23,20 +28,26 @@ const users = [
 ]
 
 export default function Home() {
-    const [Error, setError] = useState('')
+    const dispatch = useDispatch()
+    const token = useSelector(selectToken)
+    const Error = useSelector(selectError)
+    const isLoading = useSelector(selectIsLoading)
     const [data, setData] = useState({
-        userName: '',
+        email: '',
         password: ''
     })
     const handleLogIn = () => {
-        setTimeout(() =>setError(''), 5000)
-        const error = 'Invalid User Name Or Password'
-        const {userName, password} = data
-        const auth = users.find(user =>user.userName == userName && password ==password)
-        if(auth) return Router.push('/dashboard')
-        setError(error)
+        setTimeout(() =>dispatch(setError('')), 5000)
+
+        handleUserLogIn(data, dispatch, setData)
+        
     }
-  return (
+
+    useEffect( () =>{
+        if(token) return Router.push('/dashboard')
+    }, [token])
+
+    return (
       <main>
         <Header 
             auth={false} 
@@ -66,15 +77,19 @@ export default function Home() {
                         >Log In</h1>
                         <p className='text-xs'>Log In To Your Account</p>
                     </div>
+                    {
+                        Error && 
+                        <span className='text-red-500 text-sm'> {Error} </span>
+                    }
                     <div className='py-4'>
                         <input 
                             type="text" 
                             name="userName" 
-                            value={data.userName}
+                            value={data.email}
                             placeholder='User Name' id=""
                             onChange={e =>setData({
                                 ...data,
-                                userName: e.target.value
+                                email: e.target.value
                             })}
                             className='ring-0 w-full border-0 rounded-md focus:ring-0' 
                         />
@@ -92,12 +107,7 @@ export default function Home() {
                             className='ring-0 w-full border-0 rounded-md focus:ring-0' 
                         />
                     </div>
-                    {
-                        Error &&
-                        <p
-                            className='text-red-500 text-sm'
-                        > {Error} </p>
-                    }
+                    
                     <div
                         className='flex justify-between'
                     >
@@ -118,7 +128,12 @@ export default function Home() {
                             className='bg-cleotrades_color-green text-white
                              px-5 py-1 rounded-md Btn text-center'
                         >
-                            Log In
+                           { 
+                                isLoading ?
+                                <AppSpinner />
+                                :
+                                'Log In'
+                            }
                         </button>
                     </div>
 

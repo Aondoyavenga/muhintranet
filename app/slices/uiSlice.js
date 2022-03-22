@@ -17,15 +17,19 @@ const uiSlice = createSlice({
         setSuccess: (state, action) => {
             state.success = action.payload
         },
+        setIsReg: (state, action) => {
+            state.isReg = action.payload
+        },
         setIsLoading: (state, action) => {
             state.isLoading = action.payload
         }
     }
 })
 
-export const { setError, setSuccess, setIsLoading } = uiSlice.actions
+export const { setError, setIsReg, setSuccess, setIsLoading } = uiSlice.actions
 
 export const selectError = state => state.ui.Error
+export const selectIsReg = state => state.ui.isReg
 export const selectSuccess = state => state.ui.success
 export const selectIsLoading = state => state.ui.isLoading
 

@@ -1,12 +1,11 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { ExclamationIcon } from '@heroicons/react/outline'
 
-export default function Modal({title, children, open, setOpen}) {
-
+export default function Modal({title, noSave, open, children, setOpen}) {
+  
   const cancelButtonRef = useRef(null)
-
+  
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={setOpen}>
@@ -54,16 +53,18 @@ export default function Modal({title, children, open, setOpen}) {
                   </div>
                 </div>
               </div>
-              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button
-                  type="button"
-                  className="w-full inline-flex justify-center rounded-md border border-transparent 
-                  shadow-sm px-4 py-2 bg-cleotrades_color-green text-base font-medium text-white hover:bg-green-700 
-                  focus:outline-none focus:ring-0 focus:ring-offset-2  sm:ml-3 sm:w-auto sm:text-sm"
-                  onClick={() => setOpen(false)}
-                >
-                  Save
-                </button>
+              {/* <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                {
+                    !noSave &&
+                    <button
+                    type="button"
+                    className="w-full inline-flex justify-center rounded-md border border-transparent 
+                    shadow-sm px-4 py-2 bg-cleotrades_color-green text-base font-medium text-white hover:bg-green-700 
+                    focus:outline-none focus:ring-0 focus:ring-offset-2  sm:ml-3 sm:w-auto sm:text-sm"
+                    onClick={() => setOpen(false)}
+                    >
+                    Save
+                    </button>}
                 <button
                   type="button"
                   className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4
@@ -74,7 +75,7 @@ export default function Modal({title, children, open, setOpen}) {
                 >
                   Cancel
                 </button>
-              </div>
+              </div> */}
             </div>
           </Transition.Child>
         </div>

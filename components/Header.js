@@ -56,6 +56,7 @@ const Header = ({auth}) => {
             <Modal
                 open={open}
                 setOpen={setOpen}
+                noSave
                 title='User Registration'
             >
                 <EmployeeForm />

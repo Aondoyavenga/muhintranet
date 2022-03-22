@@ -1,8 +1,14 @@
 import React, { Fragment, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectError, selectIsLoading, selectSuccess } from '../app/slices/uiSlice'
+import { handleRegistration } from '../appHook/userHooks'
+import AppSpinner from '../global/AppSpinner'
 
 const EmployeeForm = () => {
     const dispatch = useDispatch()
+    const Error = useSelector(selectError)
+    const success = useSelector(selectSuccess)
+    const isLoading = useSelector(selectIsLoading)
     const [data, setData] = useState({
         age: '',
         bday: '',
@@ -36,22 +42,43 @@ const EmployeeForm = () => {
            
             setData({
                 ...data,
+                bday: value,
                 age: myAge
             })
         }
     }
 
+    const gError = Error && Error?.includes('Is')
+
     return (
         <Fragment>
             <div id="step1">
+                {
+                    Error && !gError &&
+                    <p className='text-red-500'> {Error} </p>
+                }
+                {
+                    success &&
+                    <div
+                        className='w-full 
+                        bg-cleotrades_color-green text-white text-lg shadow-md 
+                        rounded-md px-3 animate-pulse
+                        '
+                    >
+                        <p> {success} </p>
+                    </div>
+                }
                 <fieldset className="form-step">
                         <div className="grid items-center grid-flow-row-dense gap-2 container
                         md:grid-cols-12 sm:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 mx-auto">
                             <label className="text-right md:col-span-3 sm:col-span-2 xs:col-span-12" htmlFor="first_name">
-                                First Name  {data.age}
+                                First Name
                             </label>
                             <div className="my-3 md:col-span-9 sm:col-span-6 xs:col-span-12">
-                                
+                                {
+                                    Error && Error?.includes('First Name') &&
+                                    <span className='text-red-500'>{Error}</span>
+                                }
                                 <input 
                                     type="text" 
                                     id="first_name"  
@@ -71,12 +98,18 @@ const EmployeeForm = () => {
                                 Last Name  
                             </label>
                             <div className="my-3 md:col-span-9 sm:col-span-6 xs:col-span-12">
+                                {
+                                    Error && Error?.includes('Last Name') &&
+                                    <span className='text-red-500'>{Error}</span>
+                                }
                                 <input 
                                     type="text" 
                                     id="last_name"  
                                     className="w-full rounded-md focus:ring-0" 
-                                    name="last_name" 
+                                    name="last_name"
+                                    value={data.last_name}
                                     placeholder="Last Name" 
+                                    onChange={e =>handleChage(e)}
                                     required="required" data-parsley-group='block1' minlength="2"
                                 />
                             </div> 
@@ -87,6 +120,10 @@ const EmployeeForm = () => {
                                 Address  
                             </label>
                             <div className="my-3 md:col-span-9 col-sm-9 xs:col-span-12">
+                                {
+                                    Error && Error?.includes('Address') &&
+                                    <span className='text-red-500'>{Error}</span>
+                                }
                                 <input 
                                     type="text" 
                                     id="streetaddress"  
@@ -103,6 +140,10 @@ const EmployeeForm = () => {
                         md:grid-cols-12 sm:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 mx-auto">
                             <label htmlFor="city" className="control-label md:col-span-3 sm:col-span-2 xs:col-span-12">&nbsp;</label>
                             <div className="my-3 md:col-span-3 sm:col-span-3 xs:col-span-12">
+                                {
+                                    Error && Error?.includes('City') &&
+                                    <span className='text-red-500'>{Error}</span>
+                                }
                                 <input 
                                     type="text" 
                                     id="city"  
@@ -115,6 +156,10 @@ const EmployeeForm = () => {
                                 />
                             </div>
                             <div className="my-3 md:col-span-3 sm:col-span-3 xs:col-span-12">
+                                {
+                                    Error && Error?.includes('State') &&
+                                    <span className='text-red-500'>{Error}</span>
+                                }
                                 <input 
                                     type="text" 
                                     id="state"  
@@ -143,6 +188,10 @@ const EmployeeForm = () => {
                         md:grid-cols-12 sm:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 mx-auto">
                             <label className="text-right md:col-span-3 sm:col-span-2 xs:col-span-12">Gender</label>
                             <div className="my-3 md:col-span-3 sm:col-span-3 xs:col-span-12">
+                                {
+                                    Error && Error?.includes('Gender') &&
+                                    <span className='text-red-500'>{Error}</span>
+                                }
                                 <select
                                     name='gender'
                                     value={data.gender}
@@ -158,6 +207,10 @@ const EmployeeForm = () => {
                             <div className="my-3 md:col-span-3 col-sm-3 xs:col-span-12">
                                 
                                 <div className="form-group">
+                                    {
+                                        Error && Error?.includes('Birth') &&
+                                        <span className='text-red-500'>{Error}</span>
+                                    }
                                     <input 
                                         type="date" 
                                         id="bday" 
@@ -172,6 +225,10 @@ const EmployeeForm = () => {
                             </div>
 
                             <div className="my-3 md:col-span-2 sm:col-span-2 xs:col-span-12">
+                                {
+                                    Error && Error?.includes('Age') &&
+                                    <span className='text-red-500'>{Error}</span>
+                                }
                                 <input 
                                     type="number" 
                                     id="age" 
@@ -190,6 +247,10 @@ const EmployeeForm = () => {
                                 Contact
                             </label>
                             <div className="my-3 md:col-span-3 sm:col-span-3 xs:col-span-12">
+                                {
+                                    Error && Error?.includes('Email') &&
+                                    <span className='text-red-500'>{Error}</span>
+                                }
                                 <input 
                                     type="text" 
                                     id="email"  
@@ -202,6 +263,10 @@ const EmployeeForm = () => {
                                 />
                             </div>
                             <div className="my-3 md:col-span-3 sm:col-span-3 xs:col-span-12">
+                                {
+                                    Error && Error?.includes('Mobile') &&
+                                    <span className='text-red-500'>{Error}</span>
+                                }
                                 <input 
                                     type="tel" 
                                     id="mobile" 
@@ -216,7 +281,7 @@ const EmployeeForm = () => {
                             <div className="my-3 md:col-span-3 sm:col-span-3 xs:col-span-12">
                                 <input 
                                     type="tel" 
-                                    name="telephone" 
+                                    name="telehone" 
                                     id="telephone" 
                                     value={data.telehone} 
                                     onChange={e =>handleChage(e)}
@@ -322,12 +387,30 @@ const EmployeeForm = () => {
                                     <option value="HRM">HRM</option>
                                 </select>
                             </div>
+                            
                         </div>
+                        
                     </fieldset>
                 
     
             </div>
-        
+        <div className="my-3 md:col-span-12 col-sm-12 xs:col-span-12 col-md-offset-2 text-center">    
+            <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+
+                <button
+                    disabled={isLoading}
+                    onClick={() =>handleRegistration(data, dispatch, setData)}
+                    className='Btn bg-cleotrades_color-green px-6 rounded-md text-white py-2'
+                >
+                    { 
+                        isLoading ?
+                        <AppSpinner />
+                        :
+                        'Submit'
+                    }
+                </button>
+            </div>
+        </div>
     </Fragment>
     )
 }

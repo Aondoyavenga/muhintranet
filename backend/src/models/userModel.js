@@ -4,18 +4,18 @@ const { model, Schema } = mongoose
 const userSchema = new Schema({
     first_name: {
         type: String,
-        minlength: [3, 'Minimum Length Is Three'],
+        minlength: [3, 'First Name Minimum Length Is Three'],
         required: [true, 'First Name Is Required']
     },
     last_name: {
         type: String,
-        minlength: [3, 'Minimum Length Is Three'],
+        minlength: [3, 'Last Name Minimum Length Is Three'],
         required: [true, 'Last Name Is Required']
     },
 
     age: {
         type: Number,
-        min: [18, 'Minimum Age Is 18'],
+        min: [18, 'Age Minimum Age Is 18'],
         required: [true, 'Age Is Required']
     },
     bday: {
@@ -32,7 +32,7 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        unique: [true, 'Account Already Exist'],
+        unique: [true, 'Email Account Already Exist'],
         required: [true, 'Email Is Required']
     },
     gender: {
@@ -41,14 +41,14 @@ const userSchema = new Schema({
     },
     mobile: {
         type: String,
-        unique: [true, 'Account Already Exist'],
-        minlength: [11, 'Minimum Length Is 11'],
-        maxlength: [16, 'Maximum Length Is 16'],
+        unique: [true, 'Mobile Account Already Exist'],
+        minlength: [11, 'Mobile Minimum Length Is 11'],
+        maxlength: [16, 'Mobile Maximum Length Is 16'],
         required: [true, 'Mobile Is Required']
     },
     address: {
         type: String,
-        minlength: [3, 'Minimum Length Is Three'],
+        minlength: [3, 'Address Minimum Length Is Three'],
         required: [true, 'Address Is Required']
     },
     zipeCode: {
